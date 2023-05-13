@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bionic Reading</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
+    <style>
+      #bionicTextOutput b:nth-child(even) {
+        font-weight: 400;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Bionic Reading</h1>
+        </div>
+        <div class="col">
+          <p>I saw <a href="https://twitter.com/jonedmiston/status/1657218897286955008" target="_blank">a tweet</a> that suggested that bolding the first part of every word in a block of text increased the speed at which you could read.</p>
+          <p>The hypothesis seemed worth trying out...</p>
+          <p>Paste a block of text below and click the button, and see if you can read the result more quickly than normal.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea id="plainTextInput" class="form-control" rows="8">Attention neurodivergent community - this bionic reading method is absolutely mind blowing. Your eyes scan the first bold letters and your brain center automatically completes the words. It lets you read twice as fast, is less overwhelming, and helps you to stay focused. You will feel much more productive and have a greater sense of achievement which will boost your confidence and make you overall feel more positive.</textarea>
+          <button onClick="updateBionicText()">Update</button>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">Formatted</div>
+            <div id="bionicTextOutput" class="card-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function updateBionicText() {
+        // alert($('#plainTextInput').val())
+        // alert($('#plainTextInput').val().split(' ')[0].length)
+        let outputHtml = '';
+        let inputArray = $('#plainTextInput').val().split(' ');
+        for (let i=0; i < inputArray.length; i++) {
+          // outputHtml += inputArray[i].length + ' ';
+          let len = inputArray[i].length;
+          if (len == 1) {
+            outputHtml += '<b>' + inputArray[i] + '</b><b></b> ';
+          }
+          else if (len == 3) {
+            outputHtml += '<b>' + inputArray[i].substring(0,1) + '</b><b>' + inputArray[i].substring(1,3) + '</b> ';
+          }
+          else {
+            let p1Len = Math.ceil(len/2);
+            let p2Len = len-p1Len;
+            outputHtml += '<b>' + inputArray[i].substring(0,p1Len) + '</b><b>' + inputArray[i].substring(p1Len,len) + '</b> ';
+          }
+        }
+        $('#bionicTextOutput').html(outputHtml)
+      }
+      $( document ).ready(updateBionicText);
+    </script>
+  </body>
+</html>
